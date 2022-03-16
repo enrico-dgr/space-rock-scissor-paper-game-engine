@@ -1,7 +1,7 @@
 import * as _types from "../types";
 
 /**
- * @param { {} }
+ * @param { { playerNum: number; maxMatchVictories: number; } }
  * @returns { Game }
  */
 export const create = ({ playerNum, maxMatchVictories }) => ({

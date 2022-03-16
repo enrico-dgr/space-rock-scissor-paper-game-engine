@@ -1,4 +1,4 @@
-const dist = require("../dist").default;
+import dist from "../dist";
 
 /**
  *
@@ -17,3 +17,6 @@ const test = (input, functionName, expectedResult) => {
 
 	return expectedResult;
 };
+const inputCreate = { playerNum: 2, maxMatchVictories: 2 };
+dist.create(inputCreate);
+test(inputCreate, dist.create, {});

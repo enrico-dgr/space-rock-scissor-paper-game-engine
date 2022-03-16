@@ -1,4 +1,4 @@
-# Game Engine
+# Space Rock Scissor Paper Game Engine
 
 ## Description
 
@@ -13,3 +13,9 @@ The game engine let create a game in steps:
 After data settings, you can start the game with the first two players.  
 Players will play rounds until the needed score for a match is reached.
 Every win will determine player's position in tournament.
+
+## Usage
+
+```js
+import * as GE from "space-rock-scissor-paper-game-engine";
+```

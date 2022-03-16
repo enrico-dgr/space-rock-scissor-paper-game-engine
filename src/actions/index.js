@@ -18,11 +18,6 @@ const scrumble = (players) => {
 };
 
 /**
- * @param { Game } gameInstance
- */
-export const start = (gameInstance) => createMatches(gameInstance);
-
-/**
  * @param { Move } moveOne
  * @param { Move } moveTwo
  * @return { [ number, number ] } A tuple containing respectively
@@ -82,4 +77,8 @@ export const playMatch = (moveOne, moveTwo, withPlayerName, gameInstance) => {
 	}
 
 	return newInstance;
+};
+
+export default {
+	playMatch,
 };

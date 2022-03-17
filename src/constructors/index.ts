@@ -1,26 +1,17 @@
-import * as _types from "../types";
+import { Game, Player } from "../types";
 
-/**
- * @param { { playerNum: number; maxMatchVictories: number; } }
- * @returns { Game }
- */
-export const create = ({ playerNum, maxMatchVictories }) => ({
+export const create = ({
+	playerNum,
+	maxMatchVictories,
+}: Pick<Game, "playerNum" | "maxMatchVictories">): Game => ({
 	matches: [],
 	maxMatchVictories,
 	players: [],
 	playerNum,
 });
 
-/**
- * @param { string[] } names
- * @param { Game } gameInstance
- * @returns { Game }
- */
-export const createPlayers = (names, gameInstance) => {
-	/**
-	 * @type { Player[] }
-	 */
-	const players = [];
+export const createPlayers = (names: string[], gameInstance: Game): Game => {
+	const players: Player[] = [];
 
 	// add humans
 	const max = Math.max(names.length, gameInstance.playerNum);
@@ -48,11 +39,7 @@ export const createPlayers = (names, gameInstance) => {
 	};
 };
 
-/**
- * @param { Game } gameInstance
- * @return { Game }
- */
-export const createMatches = (gameInstance) => {
+export const createMatches = (gameInstance: Game): Game => {
 	const newInstance = { ...gameInstance };
 
 	for (let i = 0; i < newInstance.players.length; i += 2) {

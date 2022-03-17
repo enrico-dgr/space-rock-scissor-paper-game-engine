@@ -1,10 +1,10 @@
-import * as _types from "../types";
-import { createMatches } from "../constructors";
+import { Game, Move, Player } from "../types";
 
 /**
- * @param { Player[] } players
+ * @param players
+ * @return
  */
-const scrumble = (players) => {
+export const scrumblePlayers = (players: Player[]): Player[] => {
 	const newPlayers = [...players];
 
 	for (let i = newPlayers.length - 1; i > 0; i--) {
@@ -18,12 +18,12 @@ const scrumble = (players) => {
 };
 
 /**
- * @param { Move } moveOne
- * @param { Move } moveTwo
- * @return { [ number, number ] } A tuple containing respectively
+ * @param moveOne
+ * @param moveTwo
+ * @return A tuple containing respectively
  * the results of player one and player two.
  */
-const evaluateRound = (moveOne, moveTwo) => {
+const evaluateRound = (moveOne: Move, moveTwo: Move): [number, number] => {
 	if (moveOne === moveTwo) {
 		return [0, 0];
 	}
@@ -40,12 +40,18 @@ const evaluateRound = (moveOne, moveTwo) => {
 };
 
 /**
- * @param { Move } moveOne
- * @param { Move } moveTwo
- * @param { string } withPlayerName
- * @param { Game } gameInstance
+ * @param moveOne
+ * @param moveTwo
+ * @param withPlayerName
+ * @param gameInstance
+ * @returns
  */
-export const playMatch = (moveOne, moveTwo, withPlayerName, gameInstance) => {
+export const playMatch = (
+	moveOne: Move,
+	moveTwo: Move,
+	withPlayerName: string,
+	gameInstance: Game
+) => {
 	// find the match to play
 	const matchIndex = gameInstance.matches.findIndex(
 		(match) =>
@@ -81,4 +87,5 @@ export const playMatch = (moveOne, moveTwo, withPlayerName, gameInstance) => {
 
 export default {
 	playMatch,
+	scrumblePlayers,
 };

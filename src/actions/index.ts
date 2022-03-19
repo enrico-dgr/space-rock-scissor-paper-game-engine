@@ -84,8 +84,3 @@ export const playMatch = (
 
 	return newInstance;
 };
-
-export default {
-	playMatch,
-	scrumblePlayers,
-};

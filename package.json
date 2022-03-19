@@ -4,7 +4,7 @@
 	"description": "Game state controller for space-rock-scissor-paper",
 	"main": "lib/index.js",
 	"module": "es6/index.js",
-	"typings": "lib/types.d.ts",
+	"typings": "lib/index.d.ts",
 	"scripts": {
 		"clean": "rimraf dist",
 		"prebuild": "npm run clean",

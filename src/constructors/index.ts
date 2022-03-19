@@ -59,9 +59,3 @@ export const createMatches = (gameInstance: Game): Game => {
 
 	return newInstance;
 };
-
-export default {
-	create,
-	createPlayers,
-	createMatches,
-};

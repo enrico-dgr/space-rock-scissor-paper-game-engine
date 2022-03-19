@@ -1,7 +1,3 @@
-import Constructors from "./constructors";
-import Actions from "./actions";
-
-export default {
-	...Constructors,
-	...Actions,
-};
+export * as constructors from "./constructors";
+export * as actions from "./actions";
+export * as types from "./types";

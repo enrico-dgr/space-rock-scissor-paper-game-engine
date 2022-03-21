@@ -1,8 +1,10 @@
 export type Move = "rock" | "scissors" | "paper";
 
 export type Player = {
+	id: number;
 	name: string;
 	score: number;
+	state: "lost" | "playing" | "won";
 	type: "human" | "bot";
 };
 
@@ -11,15 +13,19 @@ type MatchPlayerInfo = {
 };
 
 export type Match = {
-	playerOne: Pick<Player, "name" | "type"> & MatchPlayerInfo;
-	playerTwo: Pick<Player, "name" | "type"> & MatchPlayerInfo;
+	playerOne: Pick<Player, "name" | "id" | "type"> & MatchPlayerInfo;
+	playerTwo: Pick<Player, "name" | "id" | "type"> & MatchPlayerInfo;
+	phase: number;
 	round: number;
-	winner: string;
+	winnerId: number | null;
 };
 
 export type Game = {
 	matches: Match[];
 	maxMatchVictories: number;
+	phase: number;
+	phaseTot: number;
 	players: Player[];
 	playerNum: 2 | 4 | 8 | 16;
+	winnerId: number | null;
 };

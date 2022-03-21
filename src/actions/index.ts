@@ -42,22 +42,21 @@ const evaluateRound = (moveOne: Move, moveTwo: Move): [number, number] => {
 /**
  * @param moveOne
  * @param moveTwo
- * @param withPlayerName
+ * @param playerId one of the two players' id
  * @param gameInstance
- * @returns
  */
 export const playMatch = (
 	moveOne: Move,
 	moveTwo: Move,
-	withPlayerName: string,
+	playerId: number,
 	gameInstance: Game
 ) => {
 	// find the match to play
 	const matchIndex = gameInstance.matches.findIndex(
 		(match) =>
-			(match.playerOne.name === withPlayerName ||
-				match.playerTwo.name === withPlayerName) &&
-			match.winner !== ""
+			(match.playerOne.id === playerId || match.playerTwo.id === playerId) &&
+			// not ended match
+			match.winnerId === null
 	);
 
 	if (matchIndex < 0) {
@@ -75,11 +74,36 @@ export const playMatch = (
 
 	// look if someone won the match
 	if (newInstance.maxMatchVictories === scoreOne) {
-		newInstance.matches[matchIndex].winner =
-			newInstance.matches[matchIndex].playerOne.name;
+		// set winner
+		newInstance.matches[matchIndex].winnerId =
+			newInstance.matches[matchIndex].playerOne.id;
+		// set loser
+		const loser = newInstance.players.find(
+			(player_) => player_.id === newInstance.matches[matchIndex].playerTwo.id
+		);
+		if (!!loser) loser.state = "lost";
 	} else if (newInstance.maxMatchVictories === scoreTwo) {
-		newInstance.matches[matchIndex].winner =
-			newInstance.matches[matchIndex].playerTwo.name;
+		// set winner
+		newInstance.matches[matchIndex].winnerId =
+			newInstance.matches[matchIndex].playerTwo.id;
+		// set loser
+		const loser = newInstance.players.find(
+			(player_) => player_.id === newInstance.matches[matchIndex].playerOne.id
+		);
+		if (!!loser) loser.state = "lost";
+	}
+
+	// if someone won, add a point to personal score.
+	if (!!newInstance.matches[matchIndex].winnerId) {
+		const player = newInstance.players.find(
+			(player_) => player_.id === newInstance.matches[matchIndex].winnerId
+		);
+		!!player && player.score++;
+	}
+
+	// if phases ended, set winner by last match winner
+	if (newInstance.players.filter((pl) => pl.state !== "lost").length === 1) {
+		newInstance.winnerId = newInstance.matches[matchIndex].winnerId;
 	}
 
 	return newInstance;

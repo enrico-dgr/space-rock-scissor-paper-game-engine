@@ -1,4 +1,4 @@
-import { noPhaseToStart } from "src/validators";
+import { noPhaseToStart } from "../validators";
 import { Game, Player } from "../types";
 
 export const create = ({

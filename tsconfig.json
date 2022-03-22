@@ -10,7 +10,7 @@
 		"strict": true,
 		"moduleResolution": "node",
 		"lib": ["DOM"],
-		"sourceMap": false,
+		"sourceMap": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,

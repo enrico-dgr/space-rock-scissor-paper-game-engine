@@ -12,8 +12,7 @@
 		"prerelease": "npm run build && cp package.json README.md dist",
 		"release": "cd ./dist && npm publish && cd ..",
 		"-": "",
-		"dev:build": "tsc -b",
-		"test": "jest"
+		"dev:build": "tsc -b"
 	},
 	"repository": {
 		"type": "git",

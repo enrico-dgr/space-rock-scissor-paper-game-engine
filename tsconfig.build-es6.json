@@ -7,5 +7,11 @@
 		"module": "es6"
 	},
 	"include": ["./src"],
-	"exclude": ["node_modules", "**/node_modules/*", "dist", "docs", "tests"]
+	"exclude": [
+		"node_modules",
+		"**/node_modules/*",
+		"dist",
+		"docs",
+		"**/__tests__"
+	]
 }

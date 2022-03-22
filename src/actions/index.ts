@@ -1,3 +1,4 @@
+import { findIndexMatchToPlay } from "../utils";
 import { Game, Move, Player } from "../types";
 
 /**
@@ -52,12 +53,7 @@ export const playMatch = (
 	gameInstance: Game
 ) => {
 	// find the match to play
-	const matchIndex = gameInstance.matches.findIndex(
-		(match) =>
-			(match.playerOne.id === playerId || match.playerTwo.id === playerId) &&
-			// not ended match
-			match.winnerId === null
-	);
+	const matchIndex = findIndexMatchToPlay(playerId, gameInstance);
 
 	if (matchIndex < 0) {
 		return gameInstance;
@@ -65,6 +61,7 @@ export const playMatch = (
 
 	const newInstance = { ...gameInstance };
 	const result = evaluateRound(moveOne, moveTwo);
+	newInstance.matches[matchIndex].round++;
 
 	// update match scores
 	const scoreOne = (newInstance.matches[matchIndex].playerOne.matchScore +=

@@ -74,6 +74,8 @@ describe("Constructors", () => {
 			gameInstance
 		);
 
+		expect(gameInstance.players.length).toBe(8);
+
 		expect(gameInstance.players).toContainEqual({
 			name: "Enrico",
 			id: 89,

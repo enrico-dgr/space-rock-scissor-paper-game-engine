@@ -21,7 +21,7 @@ export const createPlayers = (
 	const playersAll: Player[] = [];
 
 	// add humans
-	const max = Math.max(players.length, gameInstance.playerNum);
+	const max = Math.min(players.length, gameInstance.playerNum);
 	for (let i = 0; i < max; i++) {
 		playersAll.push({
 			...players[i],

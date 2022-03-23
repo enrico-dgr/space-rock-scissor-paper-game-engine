@@ -1,12 +1,11 @@
 import {
-	checkPhaseStateAndUpdate,
 	findMatchesByPlayerId,
 	findMatchToPlay,
 	phaseIsEnded,
 } from "../../utils";
 import { playBotMatches, playMatch, scrumblePlayers } from "../../actions";
 import { create, createMatches, createPlayers } from "../../constructors";
-import { Game, Match } from "../../types";
+import { Game, Match, Move } from "../../types";
 import { getRound } from "../../constants";
 
 describe("Actions", () => {
@@ -252,22 +251,46 @@ describe("Actions", () => {
 
 	it("Play bot matches", () => {
 		let botGame = create({ playerNum: 16, maxMatchVictories: 4 });
-		botGame = createPlayers([], botGame);
+		botGame = createPlayers(
+			[
+				{
+					name: "Enrico",
+					id: 89,
+				},
+			],
+			botGame
+		);
 		botGame.players = scrumblePlayers(botGame.players);
 		botGame = createMatches(botGame);
 
 		expect(phaseIsEnded(botGame)).toBeFalsy();
 
 		botGame = playBotMatches(botGame);
-		botGame = checkPhaseStateAndUpdate(botGame);
-		// console.log(botGame.matches);
+
+		let match = findMatchToPlay(89, botGame);
+
+		expect(match !== undefined).toBeTruthy();
+
+		let moveOne: Move | null = null;
+		let moveTwo: Move | null = null;
+		if (match?.playerOne.id === 89) {
+			moveOne = "scissors";
+			moveTwo = "paper";
+		} else {
+			moveOne = "paper";
+			moveTwo = "scissors";
+		}
+
+		botGame = playMatch(moveOne, moveTwo, 89, botGame);
+		botGame = playMatch(moveOne, moveTwo, 89, botGame);
+		botGame = playMatch(moveOne, moveTwo, 89, botGame);
+		botGame = playMatch(moveOne, moveTwo, 89, botGame);
 
 		expect(phaseIsEnded(botGame)).toBeFalsy();
 
-		expect(typeof botGame.matches[0].winnerId === "number").toBeTruthy();
+		botGame = playBotMatches(botGame);
 
-		expect(
-			findMatchToPlay(botGame.matches[0].winnerId ?? 0, botGame)?.phase
-		).toBe(2);
+		console.log(botGame.matches);
+		expect(findMatchToPlay(89, botGame) !== undefined).toBeTruthy();
 	});
 });

@@ -1,6 +1,6 @@
 import { findIndexMatchToPlay } from "../utils";
-import { Game, Move, Player, Round } from "../types";
-import { ROUND } from "../constants";
+import { Game, Move, Player } from "../types";
+import { getRound } from "../constants";
 
 /**
  * @param players
@@ -62,10 +62,9 @@ export const playMatch = (
 
 	const newInstance = { ...gameInstance };
 	const result = evaluateRound(moveOne, moveTwo);
-	const round: Round =
-		newInstance.matches[matchIndex].rounds[
-			newInstance.matches[matchIndex].rounds.length - 1
-		];
+
+	const roundIndex = newInstance.matches[matchIndex].rounds.length - 1;
+	const round = newInstance.matches[matchIndex].rounds[roundIndex];
 	round.moveOne = moveOne;
 	round.moveTwo = moveTwo;
 
@@ -105,7 +104,7 @@ export const playMatch = (
 		if (!!loser) loser.state = "lost";
 	} else {
 		// another round
-		newInstance.matches[matchIndex].rounds.push(ROUND);
+		newInstance.matches[matchIndex].rounds.push(getRound());
 		newInstance.matches[matchIndex].currentRound++;
 	}
 

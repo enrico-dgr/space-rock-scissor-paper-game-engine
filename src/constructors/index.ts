@@ -1,5 +1,6 @@
 import { noPhaseToStart } from "../validators";
 import { Game, Player } from "../types";
+import { getRound } from "../constants";
 
 export const create = ({
 	playerNum,
@@ -79,13 +80,7 @@ export const createMatches = (gameInstance: Game): Game => {
 			},
 			phase: newInstance.phase,
 			currentRound: 1,
-			rounds: [
-				{
-					moveOne: null,
-					moveTwo: null,
-					winnerId: null,
-				},
-			],
+			rounds: [getRound()],
 			winnerId: null,
 		});
 	}

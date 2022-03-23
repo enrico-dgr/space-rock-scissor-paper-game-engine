@@ -2,6 +2,7 @@ import { findMatchesByPlayerId, findMatchToPlay } from "../../utils";
 import { playMatch, scrumblePlayers } from "../../actions";
 import { create, createMatches, createPlayers } from "../../constructors";
 import { Game, Match } from "../../types";
+import { getRound } from "../../constants";
 
 describe("Actions", () => {
 	let playerNum: Game["playerNum"] = 8;
@@ -105,6 +106,18 @@ describe("Actions", () => {
 
 		expect(match?.currentRound).toBe(2);
 
+		const FIRST_ROUND = {
+			moveOne: "paper",
+			moveTwo: "rock",
+			winnerId: match?.playerOne.id,
+		};
+
+		expect(match?.rounds.length).toBe(2);
+
+		expect(match?.rounds).toContainEqual(getRound());
+
+		expect(match?.rounds).toContainEqual(FIRST_ROUND);
+
 		gameInstance = playMatch("scissors", "rock", 21, gameInstance);
 		match = findMatchToPlay(21, gameInstance);
 
@@ -117,6 +130,20 @@ describe("Actions", () => {
 		expect(match?.phase).toBe(1);
 
 		expect(match?.currentRound).toBe(3);
+
+		const SECOND_ROUND = {
+			moveOne: "scissors",
+			moveTwo: "rock",
+			winnerId: match?.playerTwo.id,
+		};
+
+		expect(match?.rounds.length).toBe(3);
+
+		expect(match?.rounds).toContainEqual(getRound());
+
+		expect(match?.rounds).toContainEqual(FIRST_ROUND);
+
+		expect(match?.rounds).toContainEqual(SECOND_ROUND);
 
 		gameInstance = playMatch("scissors", "rock", 21, gameInstance);
 		match = findMatchToPlay(21, gameInstance);
@@ -131,6 +158,22 @@ describe("Actions", () => {
 
 		expect(match?.currentRound).toBe(4);
 
+		const THIRD_ROUND = {
+			moveOne: "scissors",
+			moveTwo: "rock",
+			winnerId: match?.playerTwo.id,
+		};
+
+		expect(match?.rounds.length).toBe(4);
+
+		expect(match?.rounds).toContainEqual(getRound());
+
+		expect(match?.rounds).toContainEqual(FIRST_ROUND);
+
+		expect(match?.rounds).toContainEqual(SECOND_ROUND);
+
+		expect(match?.rounds).toContainEqual(THIRD_ROUND);
+
 		gameInstance = playMatch("scissors", "paper", 21, gameInstance);
 		match = findMatchToPlay(21, gameInstance);
 
@@ -143,6 +186,24 @@ describe("Actions", () => {
 		expect(match?.phase).toBe(1);
 
 		expect(match?.currentRound).toBe(5);
+
+		const FOURTH_ROUND = {
+			moveOne: "scissors",
+			moveTwo: "paper",
+			winnerId: match?.playerOne.id,
+		};
+
+		expect(match?.rounds.length).toBe(5);
+
+		expect(match?.rounds).toContainEqual(getRound());
+
+		expect(match?.rounds).toContainEqual(FIRST_ROUND);
+
+		expect(match?.rounds).toContainEqual(SECOND_ROUND);
+
+		expect(match?.rounds).toContainEqual(THIRD_ROUND);
+
+		expect(match?.rounds).toContainEqual(FOURTH_ROUND);
 
 		gameInstance = playMatch("scissors", "paper", 21, gameInstance);
 		match = findMatchToPlay(21, gameInstance);
@@ -164,5 +225,23 @@ describe("Actions", () => {
 		expect(match?.phase).toBe(1);
 
 		expect(match?.currentRound).toBe(5);
+
+		const FIFTH_ROUND = {
+			moveOne: "scissors",
+			moveTwo: "paper",
+			winnerId: match?.playerOne.id,
+		};
+
+		expect(match?.rounds.length).toBe(5);
+
+		expect(match?.rounds).toContainEqual(FIRST_ROUND);
+
+		expect(match?.rounds).toContainEqual(SECOND_ROUND);
+
+		expect(match?.rounds).toContainEqual(THIRD_ROUND);
+
+		expect(match?.rounds).toContainEqual(FOURTH_ROUND);
+
+		expect(match?.rounds).toContainEqual(FIFTH_ROUND);
 	});
 });

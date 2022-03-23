@@ -1,3 +1,4 @@
+import { MOVES } from "../constants";
 import { Game, Match } from "../types";
 
 /**
@@ -57,3 +58,8 @@ export const findMatch = (
 			(m.playerOne.id === playerId || m.playerTwo.id === playerId) &&
 			(m.playerOne.id === otherPlayerId || m.playerTwo.id === otherPlayerId)
 	);
+
+export const getRandomMove = () => MOVES[Math.floor(Math.random() * 3)];
+
+export const phaseIsEnded = (gameInstance: Game): boolean =>
+	gameInstance.matches.findIndex((m) => m.winnerId === null) > -1;

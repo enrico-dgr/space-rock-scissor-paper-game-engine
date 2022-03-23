@@ -1,3 +1,5 @@
+import { playBotMatches, scrumblePlayers } from "../../actions";
+import { phaseIsEnded, checkPhaseStateAndUpdate } from "../../utils";
 import { create, createMatches, createPlayers } from "../../constructors";
 import { Game } from "../../types";
 
@@ -233,5 +235,39 @@ describe("Constructors", () => {
 			],
 			winnerId: null,
 		});
+	});
+
+	it("Game phases", () => {
+		let botGame = create({ playerNum: 16, maxMatchVictories: 4 });
+		botGame = createPlayers([], botGame);
+		botGame.players = scrumblePlayers(botGame.players);
+		botGame = createMatches(botGame);
+
+		expect(phaseIsEnded(botGame)).toBeFalsy();
+		expect(botGame.phase).toBe(1);
+
+		botGame = playBotMatches(botGame);
+		botGame = checkPhaseStateAndUpdate(botGame);
+
+		expect(phaseIsEnded(botGame)).toBeFalsy();
+		expect(botGame.phase).toBe(2);
+
+		botGame = playBotMatches(botGame);
+		botGame = checkPhaseStateAndUpdate(botGame);
+
+		expect(phaseIsEnded(botGame)).toBeFalsy();
+		expect(botGame.phase).toBe(3);
+
+		botGame = playBotMatches(botGame);
+		botGame = checkPhaseStateAndUpdate(botGame);
+
+		expect(phaseIsEnded(botGame)).toBeFalsy();
+		expect(botGame.phase).toBe(4);
+
+		botGame = playBotMatches(botGame);
+		botGame = checkPhaseStateAndUpdate(botGame);
+
+		expect(phaseIsEnded(botGame)).toBeTruthy();
+		expect(botGame.phase).toBe(4);
 	});
 });

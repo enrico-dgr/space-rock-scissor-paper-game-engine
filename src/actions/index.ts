@@ -1,6 +1,7 @@
-import { findIndexMatchToPlay } from "../utils";
+import { findIndexMatchToPlay, phaseIsEnded } from "../utils";
 import { Game, Move, Player } from "../types";
 import { getRound } from "../constants";
+import { createMatches } from "../constructors";
 
 /**
  * @param players
@@ -60,7 +61,7 @@ export const playMatch = (
 		return gameInstance;
 	}
 
-	const newInstance = { ...gameInstance };
+	let newInstance = { ...gameInstance };
 	const result = evaluateRound(moveOne, moveTwo);
 
 	const roundIndex = newInstance.matches[matchIndex].rounds.length - 1;
@@ -119,7 +120,33 @@ export const playMatch = (
 	// if phases ended, set winner by last match winner
 	if (newInstance.players.filter((pl) => pl.state !== "lost").length === 1) {
 		newInstance.winnerId = newInstance.matches[matchIndex].winnerId;
+	} else if (phaseIsEnded(newInstance)) {
+		newInstance = playBotMatches(createMatches(newInstance));
 	}
 
 	return newInstance;
+};
+
+export const playBotMatches = (gameInstance: Game): Game => {
+	const botMatches = gameInstance.matches.filter(
+		(m) =>
+			m.playerOne.type === "bot" &&
+			m.playerTwo.type === "bot" &&
+			m.winnerId === null
+	);
+
+	for (const match of botMatches) {
+		match.winnerId =
+			Math.random() > 0.5 ? match.playerOne.id : match.playerTwo.id;
+		// while (match.winnerId === null) {
+		// 	gameInstance = playMatch(
+		// 		getRandomMove(),
+		// 		getRandomMove(),
+		// 		match.playerOne.id,
+		// 		gameInstance
+		// 	);
+		// }
+	}
+
+	return gameInstance;
 };

@@ -1,5 +1,10 @@
-import { findMatchesByPlayerId, findMatchToPlay } from "../../utils";
-import { playMatch, scrumblePlayers } from "../../actions";
+import {
+	checkPhaseStateAndUpdate,
+	findMatchesByPlayerId,
+	findMatchToPlay,
+	phaseIsEnded,
+} from "../../utils";
+import { playBotMatches, playMatch, scrumblePlayers } from "../../actions";
 import { create, createMatches, createPlayers } from "../../constructors";
 import { Game, Match } from "../../types";
 import { getRound } from "../../constants";
@@ -243,5 +248,26 @@ describe("Actions", () => {
 		expect(match?.rounds).toContainEqual(FOURTH_ROUND);
 
 		expect(match?.rounds).toContainEqual(FIFTH_ROUND);
+	});
+
+	it("Play bot matches", () => {
+		let botGame = create({ playerNum: 16, maxMatchVictories: 4 });
+		botGame = createPlayers([], botGame);
+		botGame.players = scrumblePlayers(botGame.players);
+		botGame = createMatches(botGame);
+
+		expect(phaseIsEnded(botGame)).toBeFalsy();
+
+		botGame = playBotMatches(botGame);
+		botGame = checkPhaseStateAndUpdate(botGame);
+		// console.log(botGame.matches);
+
+		expect(phaseIsEnded(botGame)).toBeFalsy();
+
+		expect(typeof botGame.matches[0].winnerId === "number").toBeTruthy();
+
+		expect(
+			findMatchToPlay(botGame.matches[0].winnerId ?? 0, botGame)?.phase
+		).toBe(2);
 	});
 });

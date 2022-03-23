@@ -1,3 +1,4 @@
+import { createMatches } from "../constructors";
 import { MOVES } from "../constants";
 import { Game, Match } from "../types";
 
@@ -62,4 +63,16 @@ export const findMatch = (
 export const getRandomMove = () => MOVES[Math.floor(Math.random() * 3)];
 
 export const phaseIsEnded = (gameInstance: Game): boolean =>
-	gameInstance.matches.findIndex((m) => m.winnerId === null) > -1;
+	gameInstance.matches.findIndex((m) => m.winnerId === null) < 0;
+
+export const checkPhaseStateAndUpdate = (gameInstance: Game) => {
+	// if phases ended, set winner by last match winner
+	if (gameInstance.players.filter((pl) => pl.state !== "lost").length === 1) {
+		gameInstance.winnerId =
+			gameInstance.matches[gameInstance.matches.length - 1].winnerId;
+	} else if (phaseIsEnded(gameInstance)) {
+		gameInstance = createMatches(gameInstance);
+	}
+
+	return gameInstance;
+};

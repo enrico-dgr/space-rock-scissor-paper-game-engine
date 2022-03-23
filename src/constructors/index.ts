@@ -78,7 +78,14 @@ export const createMatches = (gameInstance: Game): Game => {
 				matchScore: 0,
 			},
 			phase: newInstance.phase,
-			round: 0,
+			currentRound: 1,
+			rounds: [
+				{
+					moveOne: null,
+					moveTwo: null,
+					winnerId: null,
+				},
+			],
 			winnerId: null,
 		});
 	}

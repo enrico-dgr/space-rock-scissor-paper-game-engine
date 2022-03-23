@@ -151,7 +151,14 @@ describe("Constructors", () => {
 				matchScore: 0,
 			},
 			phase: 1,
-			round: 0,
+			currentRound: 1,
+			rounds: [
+				{
+					moveOne: null,
+					moveTwo: null,
+					winnerId: null,
+				},
+			],
 			winnerId: null,
 		});
 		expect(gameInstance.matches).toContainEqual({
@@ -168,7 +175,14 @@ describe("Constructors", () => {
 				matchScore: 0,
 			},
 			phase: 1,
-			round: 0,
+			currentRound: 1,
+			rounds: [
+				{
+					moveOne: null,
+					moveTwo: null,
+					winnerId: null,
+				},
+			],
 			winnerId: null,
 		});
 		expect(gameInstance.matches).toContainEqual({
@@ -185,7 +199,14 @@ describe("Constructors", () => {
 				matchScore: 0,
 			},
 			phase: 1,
-			round: 0,
+			currentRound: 1,
+			rounds: [
+				{
+					moveOne: null,
+					moveTwo: null,
+					winnerId: null,
+				},
+			],
 			winnerId: null,
 		});
 		expect(gameInstance.matches).toContainEqual({
@@ -202,7 +223,14 @@ describe("Constructors", () => {
 				matchScore: 0,
 			},
 			phase: 1,
-			round: 0,
+			currentRound: 1,
+			rounds: [
+				{
+					moveOne: null,
+					moveTwo: null,
+					winnerId: null,
+				},
+			],
 			winnerId: null,
 		});
 	});

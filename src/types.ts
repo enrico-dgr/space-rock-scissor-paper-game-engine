@@ -12,11 +12,18 @@ type MatchPlayerInfo = {
 	matchScore: number;
 };
 
+export type Round = {
+	moveOne: Move | null;
+	moveTwo: Move | null;
+	winnerId: number | null;
+};
+
 export type Match = {
 	playerOne: Pick<Player, "name" | "id" | "type"> & MatchPlayerInfo;
 	playerTwo: Pick<Player, "name" | "id" | "type"> & MatchPlayerInfo;
 	phase: number;
-	round: number;
+	rounds: Round[];
+	currentRound: number;
 	winnerId: number | null;
 };
 

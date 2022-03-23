@@ -103,7 +103,7 @@ describe("Actions", () => {
 
 		expect(match?.phase).toBe(1);
 
-		expect(match?.round).toBe(1);
+		expect(match?.currentRound).toBe(2);
 
 		gameInstance = playMatch("scissors", "rock", 21, gameInstance);
 		match = findMatchToPlay(21, gameInstance);
@@ -116,7 +116,7 @@ describe("Actions", () => {
 
 		expect(match?.phase).toBe(1);
 
-		expect(match?.round).toBe(2);
+		expect(match?.currentRound).toBe(3);
 
 		gameInstance = playMatch("scissors", "rock", 21, gameInstance);
 		match = findMatchToPlay(21, gameInstance);
@@ -129,7 +129,7 @@ describe("Actions", () => {
 
 		expect(match?.phase).toBe(1);
 
-		expect(match?.round).toBe(3);
+		expect(match?.currentRound).toBe(4);
 
 		gameInstance = playMatch("scissors", "paper", 21, gameInstance);
 		match = findMatchToPlay(21, gameInstance);
@@ -142,7 +142,7 @@ describe("Actions", () => {
 
 		expect(match?.phase).toBe(1);
 
-		expect(match?.round).toBe(4);
+		expect(match?.currentRound).toBe(5);
 
 		gameInstance = playMatch("scissors", "paper", 21, gameInstance);
 		match = findMatchToPlay(21, gameInstance);
@@ -163,6 +163,6 @@ describe("Actions", () => {
 
 		expect(match?.phase).toBe(1);
 
-		expect(match?.round).toBe(5);
+		expect(match?.currentRound).toBe(5);
 	});
 });

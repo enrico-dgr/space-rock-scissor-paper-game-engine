@@ -1,5 +1,6 @@
 import { findIndexMatchToPlay } from "../utils";
-import { Game, Move, Player } from "../types";
+import { Game, Move, Player, Round } from "../types";
+import { ROUND } from "../constants";
 
 /**
  * @param players
@@ -61,7 +62,21 @@ export const playMatch = (
 
 	const newInstance = { ...gameInstance };
 	const result = evaluateRound(moveOne, moveTwo);
-	newInstance.matches[matchIndex].round++;
+	const round: Round =
+		newInstance.matches[matchIndex].rounds[
+			newInstance.matches[matchIndex].rounds.length - 1
+		];
+	round.moveOne = moveOne;
+	round.moveTwo = moveTwo;
+
+	// set round winner
+	if (result[0] === 1) {
+		// playerOne wins the round
+		round.winnerId = newInstance.matches[matchIndex].playerOne.id;
+	} else if (result[1] === 1) {
+		// playerTwo wins the round
+		round.winnerId = newInstance.matches[matchIndex].playerTwo.id;
+	} // else: draw
 
 	// update match scores
 	const scoreOne = (newInstance.matches[matchIndex].playerOne.matchScore +=
@@ -88,6 +103,10 @@ export const playMatch = (
 			(player_) => player_.id === newInstance.matches[matchIndex].playerOne.id
 		);
 		if (!!loser) loser.state = "lost";
+	} else {
+		// another round
+		newInstance.matches[matchIndex].rounds.push(ROUND);
+		newInstance.matches[matchIndex].currentRound++;
 	}
 
 	// if someone won, add a point to personal score.

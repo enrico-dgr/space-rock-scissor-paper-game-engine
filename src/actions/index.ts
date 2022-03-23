@@ -136,8 +136,20 @@ export const playBotMatches = (gameInstance: Game): Game => {
 	);
 
 	for (const match of botMatches) {
-		match.winnerId =
-			Math.random() > 0.5 ? match.playerOne.id : match.playerTwo.id;
+		if (Math.random() > 0.5) {
+			match.winnerId = match.playerOne.id;
+			match.playerOne.matchScore = gameInstance.maxMatchVictories;
+			match.playerTwo.matchScore = Math.floor(
+				Math.random() * gameInstance.maxMatchVictories
+			);
+		} else {
+			match.winnerId = match.playerTwo.id;
+			match.playerTwo.matchScore = gameInstance.maxMatchVictories;
+			match.playerOne.matchScore = Math.floor(
+				Math.random() * gameInstance.maxMatchVictories
+			);
+		}
+
 		// while (match.winnerId === null) {
 		// 	gameInstance = playMatch(
 		// 		getRandomMove(),
